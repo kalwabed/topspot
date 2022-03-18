@@ -2,8 +2,8 @@ import { extendTheme, theme as ChakraTheme } from '@chakra-ui/react'
 
 const fonts = {
   ...ChakraTheme.fonts,
-  body: 'Inter, sans-serif',
-  heading: 'Inter, sans-serif'
+  body: 'InterVariable, sans-serif',
+  heading: 'InterVariable, sans-serif'
 }
 
 const customGlobalStyles = {
