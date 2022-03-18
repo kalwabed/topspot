@@ -2,6 +2,8 @@ import type { NextPage } from 'next'
 import { Box, Flex, Text } from '@chakra-ui/react'
 import React from 'react'
 
+import WithAuthorizedUser from '~components/hoc/with-authentication'
+
 const HomePage: NextPage = () => {
   return (
     <Flex flexDir="column" mx="auto">
@@ -12,4 +14,4 @@ const HomePage: NextPage = () => {
   )
 }
 
-export default HomePage
+export default WithAuthorizedUser(HomePage)

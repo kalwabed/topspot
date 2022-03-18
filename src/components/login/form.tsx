@@ -1,4 +1,4 @@
-import { Box, Button, Flex, Heading, Stack } from '@chakra-ui/react'
+import { Box, Button, Flex, Heading } from '@chakra-ui/react'
 import { BsSpotify } from 'react-icons/bs'
 import React from 'react'
 import { signIn } from 'next-auth/react'
