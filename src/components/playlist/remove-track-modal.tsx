@@ -7,10 +7,12 @@ import {
   ModalFooter,
   ModalHeader,
   ModalOverlay,
-  Text
+  Text,
+  useToast
 } from '@chakra-ui/react'
 import React from 'react'
 import { useSWRConfig } from 'swr'
+
 import { removePlaylistItem } from '~lib/spotify'
 
 type RemoveTrackModalProps = {
@@ -21,10 +23,23 @@ type RemoveTrackModalProps = {
 }
 
 const RemoveTrackModal = ({ isOpen, onClose, playlistId, trackUri }: RemoveTrackModalProps) => {
+  const toast = useToast()
   const { mutate } = useSWRConfig()
 
   const handleRemovePlaylistItem = async () => {
-    await removePlaylistItem(playlistId, trackUri)
+    const { status } = await removePlaylistItem(playlistId, trackUri)
+
+    if (status !== 200) {
+      toast({
+        status: 'error',
+        title: 'Error removing track',
+        description: "You cannot remove tracks from a playlist you don't own."
+      })
+      onClose()
+      return
+    }
+
+    toast({ status: 'success', title: 'Track removed', description: 'The track has been removed from your playlist.' })
     mutate(`/playlists/${playlistId}`)
     onClose()
   }
