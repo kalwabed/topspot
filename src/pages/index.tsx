@@ -1,12 +1,29 @@
-import type { NextPage } from 'next'
+import type { GetServerSideProps, NextPage } from 'next'
 import { Box, Flex, Heading, Text, VStack } from '@chakra-ui/react'
 import Image from 'next/image'
-import { useSession } from 'next-auth/react'
+import { getSession, useSession } from 'next-auth/react'
 import useSWR from 'swr'
 
 import WithAuthorizedUser from '~components/hoc/with-authentication'
 import { getUserPlaylists } from '~lib/spotify'
 import Playlists from '~components/profile/playlists'
+
+export const getServerSideProps: GetServerSideProps = async props => {
+  const { req } = props
+
+  const session = await getSession({ req })
+
+  if (!session) {
+    return {
+      props: {},
+      redirect: {
+        destination: '/login'
+      }
+    }
+  }
+
+  return { props: {} }
+}
 
 const HomePage: NextPage = () => {
   const { data: session } = useSession()

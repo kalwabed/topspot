@@ -16,7 +16,7 @@ const WithAuthorizedUser = (Component: React.ElementType) => {
         const currentUser = await getCurrentUser()
 
         if (currentUser?.status === 401) {
-          signOut({ callbackUrl: '/login' })
+          signOut({ redirect: false })
           return {}
         }
 
@@ -33,7 +33,6 @@ const WithAuthorizedUser = (Component: React.ElementType) => {
       if (appSession && userSession) {
         return <Component {...props} />
       } else {
-        console.log('test')
         router.push('/login')
       }
 
