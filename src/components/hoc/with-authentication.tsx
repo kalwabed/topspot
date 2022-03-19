@@ -13,8 +13,6 @@ const WithAuthorizedUser = (Component: React.ElementType) => {
 
     useEffect(() => {
       async function checkSession() {
-        if (!userSession) return {}
-
         const currentUser = await getCurrentUser()
 
         if (currentUser?.status === 401) {
@@ -22,7 +20,7 @@ const WithAuthorizedUser = (Component: React.ElementType) => {
           return {}
         }
 
-        return userSession
+        return currentUser.data
       }
 
       checkSession().then(session => {
@@ -34,8 +32,10 @@ const WithAuthorizedUser = (Component: React.ElementType) => {
     if (isReady) {
       if (appSession && userSession) {
         return <Component {...props} />
+      } else {
+        console.log('test')
+        router.push('/login')
       }
-      router.push('/login')
 
       return <div>Loading...</div>
     }
