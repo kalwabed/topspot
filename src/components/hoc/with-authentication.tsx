@@ -1,9 +1,11 @@
-import { getSession, useSession } from 'next-auth/react'
+import { signOut, useSession } from 'next-auth/react'
 import { useRouter } from 'next/router'
 import { useState, useEffect } from 'react'
 
-const WithAuthorizedUser = Component => {
-  return function WithAuth(props) {
+import { getCurrentUser } from '~lib/spotify'
+
+const WithAuthorizedUser = (Component: React.ElementType) => {
+  return function WithAuth(props: any) {
     const [appSession, setAppSession] = useState({})
     const [isReady, setIsReady] = useState(false)
     const router = useRouter()
@@ -11,14 +13,23 @@ const WithAuthorizedUser = Component => {
 
     useEffect(() => {
       async function checkSession() {
-        return await getSession()
+        if (!userSession) return {}
+
+        const currentUser = await getCurrentUser()
+
+        if (currentUser?.status === 401) {
+          signOut({ callbackUrl: '/login' })
+          return {}
+        }
+
+        return userSession
       }
 
       checkSession().then(session => {
         setAppSession(session)
         setIsReady(true)
       })
-    }, [])
+    }, [userSession])
 
     if (isReady) {
       if (appSession && userSession) {

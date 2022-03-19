@@ -1,35 +1,50 @@
 import type { NextPage } from 'next'
-import { Flex, Heading } from '@chakra-ui/react'
-import React from 'react'
+import { Box, Flex, Heading, Text, VStack } from '@chakra-ui/react'
 import Image from 'next/image'
 import { useSession } from 'next-auth/react'
+import useSWR from 'swr'
 
 import WithAuthorizedUser from '~components/hoc/with-authentication'
+import { getUserPlaylists } from '~lib/spotify'
+import Playlists from '~components/profile/playlists'
 
 const HomePage: NextPage = () => {
   const { data: session } = useSession()
+  const { data: playlists } = useSWR('/me/playlists', getUserPlaylists)
 
   return (
-    <Flex flexDir="column" w="full" mt={8}>
-      <Flex flexDir={['column', 'row']} alignItems="center" p={8} bgColor="blue.50" rounded="lg" shadow="base">
+    <VStack align="start" w="full" spacing={8} mt={8}>
+      <Flex flexDir={['column', 'row']} w="full" alignItems="center" p={8} bgColor="gray.50" rounded="lg" shadow="base">
         <Image
-          src={session?.user?.image}
+          src={session?.user?.image || ''}
           alt="User profile"
           objectFit="cover"
           width={70}
           height={70}
-          className="rounded"
+          className="rounded-full"
         />
 
-        <Heading ml={8}>{session.user.name}</Heading>
+        <Heading ml={8}>{session?.user?.name}</Heading>
       </Flex>
 
+      <Box w="full" p={8} bgColor="gray.50" rounded="lg" shadow="base">
+        {playlists ? (
+          <Playlists playlists={playlists?.userPlaylists} />
+        ) : (
+          <Text textAlign="center">Belum ada playlists</Text>
+        )}
+      </Box>
+
       <style jsx global>{`
-        .rounded {
+        .rounded-full {
           border-radius: 50%;
         }
+
+        .rounded-md {
+          border-radius: 5px;
+        }
       `}</style>
-    </Flex>
+    </VStack>
   )
 }
 
