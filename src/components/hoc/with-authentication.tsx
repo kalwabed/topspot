@@ -1,12 +1,13 @@
-import { getSession } from 'next-auth/react'
+import { getSession, useSession } from 'next-auth/react'
 import { useRouter } from 'next/router'
 import { useState, useEffect } from 'react'
 
 const WithAuthorizedUser = Component => {
   return function WithAuth(props) {
-    const [userSession, setUserSession] = useState({})
+    const [appSession, setAppSession] = useState({})
     const [isReady, setIsReady] = useState(false)
     const router = useRouter()
+    const { data: userSession } = useSession()
 
     useEffect(() => {
       async function checkSession() {
@@ -14,13 +15,13 @@ const WithAuthorizedUser = Component => {
       }
 
       checkSession().then(session => {
-        setUserSession(session)
+        setAppSession(session)
         setIsReady(true)
       })
     }, [])
 
     if (isReady) {
-      if (userSession) {
+      if (appSession && userSession) {
         return <Component {...props} />
       }
       router.push('/login')
