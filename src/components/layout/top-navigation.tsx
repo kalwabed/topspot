@@ -8,7 +8,7 @@ const TopNavigation = () => {
   const { data: session } = useSession()
 
   return (
-    <Box w="full" bgColor="green.200" p={4}>
+    <Box w="full" bgColor="gray.200" shadow="sm" p={4}>
       <Container maxW="container.lg" mx="auto" p={0}>
         <Flex justify="space-between">
           <Text>Top Navigation</Text>
