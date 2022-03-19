@@ -60,3 +60,18 @@ export async function getPlaylist(playlistId: string): Promise<ApiResponse<Playl
     console.error(error)
   }
 }
+
+export async function removePlaylistItem(playlistId: string, trackUri: string): Promise<ApiResponse<null> | undefined> {
+  try {
+    const fetchRemovePlaylistItem = await fetcher(`/playlists/${playlistId}/tracks`, {
+      method: 'DELETE',
+      body: JSON.stringify({
+        tracks: [{ uri: trackUri }]
+      })
+    })
+
+    return { data: null, status: fetchRemovePlaylistItem.status }
+  } catch (error) {
+    console.error(error)
+  }
+}

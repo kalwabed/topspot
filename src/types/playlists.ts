@@ -49,6 +49,7 @@ export interface Playlist {
       track: {
         id: string
         name: string
+        uri: string
         artists: Artist[]
         album: {
           album_type: string

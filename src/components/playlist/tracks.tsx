@@ -1,12 +1,23 @@
-import { Button, Flex, Grid, Text, VStack } from '@chakra-ui/react'
+import { Button, Flex, Grid, Text, useDisclosure, VStack } from '@chakra-ui/react'
 import Image from 'next/image'
-import React from 'react'
+import React, { useState } from 'react'
 
 import { Playlist } from '~types/playlists'
+import RemoveTrackModal from './remove-track-modal'
 
 const TrackList = ({ playlist }: { playlist: Playlist }) => {
+  const [trackUri, setTrackUri] = useState('')
+  const { onOpen, onClose, isOpen } = useDisclosure()
+
+  const handleOpenModal = trackUri => {
+    setTrackUri(trackUri)
+    onOpen()
+  }
+
   return (
     <VStack mt={8} spacing={4} alignItems="start">
+      <RemoveTrackModal isOpen={isOpen} onClose={onClose} playlistId={playlist.id} trackUri={trackUri} />
+
       {playlist?.tracks?.items?.map(item => (
         <Grid
           key={item.track.id}
@@ -28,7 +39,14 @@ const TrackList = ({ playlist }: { playlist: Playlist }) => {
           <Text textOverflow="ellipsis" overflow="hidden" whiteSpace="nowrap" title={item.track.album.name}>
             {item.track.album.name}
           </Text>
-          <Button ml="auto" mr={1} colorScheme="red" variant="ghost" size="sm">
+          <Button
+            ml="auto"
+            mr={1}
+            colorScheme="red"
+            variant="ghost"
+            size="sm"
+            onClick={() => handleOpenModal(item.track.uri)}
+          >
             Remove
           </Button>
         </Grid>

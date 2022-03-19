@@ -7,7 +7,7 @@ const LayoutRoot: React.FC = ({ children }) => {
   return (
     <Flex flexDir="column" flex="1 1 auto" minH="full" width="full">
       <TopNavigation />
-      <Flex as="main" flexDir="column" maxW="container.lg" w="full" mx="auto">
+      <Flex as="main" flexDir="column" maxW="container.lg" w="full" mx="auto" mb={12}>
         {children}
       </Flex>
     </Flex>

@@ -1,12 +1,15 @@
 import NextAuth from 'next-auth'
 import SpotifyProvider from 'next-auth/providers/spotify'
 
+const scope = 'user-read-email playlist-modify-public'
+
 export default NextAuth({
   secret: 'FW/cWaffZBPD3Vsh8CzBTBujLdiXyzaIKvb24My071Q=',
   providers: [
     SpotifyProvider({
       clientId: process.env.SPOTIFY_ID,
-      clientSecret: process.env.SPOTIFY_SECRET
+      clientSecret: process.env.SPOTIFY_SECRET,
+      authorization: `https://accounts.spotify.com/authorize?scope=${encodeURIComponent(scope)}`
     })
   ],
   callbacks: {
