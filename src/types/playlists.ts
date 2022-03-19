@@ -53,8 +53,9 @@ export interface Playlist {
         album: {
           album_type: string
           artists: Artist[]
-          available_markets: string[]
+          images: { height: number; width: number; url: string }[]
           id: string
+          name: string
         }
       }
     }[]
