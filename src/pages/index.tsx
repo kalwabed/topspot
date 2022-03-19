@@ -14,7 +14,17 @@ const HomePage: NextPage = () => {
 
   return (
     <VStack align="start" w="full" spacing={8} mt={8}>
-      <Flex flexDir={['column', 'row']} w="full" alignItems="center" p={8} bgColor="gray.50" rounded="lg" shadow="base">
+      <Flex
+        flexDir={['column', 'row']}
+        w="full"
+        alignItems="center"
+        p={8}
+        bgColor="gray.50"
+        rounded="lg"
+        shadow="base"
+        border="1px solid"
+        borderColor="gray.200"
+      >
         <Image
           src={session?.user?.image || ''}
           alt="User profile"
@@ -27,7 +37,11 @@ const HomePage: NextPage = () => {
         <Heading ml={8}>{session?.user?.name}</Heading>
       </Flex>
 
-      <Box w="full" p={8} bgColor="gray.50" rounded="lg" shadow="base">
+      <Box w="full" p={8} bgColor="gray.50" rounded="lg" shadow="base" border="1px solid" borderColor="gray.200">
+        <Heading fontSize="2xl" mb={8}>
+          Playlists
+        </Heading>
+
         {playlists ? (
           <Playlists playlists={playlists?.userPlaylists} />
         ) : (

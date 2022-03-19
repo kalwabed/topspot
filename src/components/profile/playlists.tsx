@@ -7,7 +7,7 @@ import { UserPlaylists } from '~types/playlists'
 
 const Playlists = ({ playlists }: { playlists: UserPlaylists }) => {
   return (
-    <Grid gridTemplateColumns="repeat(4,1fr)" gap={6}>
+    <Grid gridTemplateColumns={['none', 'repeat(4,1fr)']} gridTemplateRows={['repeat(1,1fr)', 'none']} gap={6}>
       {playlists?.items?.map(item => (
         <LinkBox
           key={item.id}
@@ -15,11 +15,14 @@ const Playlists = ({ playlists }: { playlists: UserPlaylists }) => {
           display="flex"
           flexDir="column"
           w="full"
-          bgColor="gray.100"
+          bgColor="green.100"
           overflow="hidden"
           rounded="md"
+          shadow="sm"
+          transition="all .2s ease-in-out"
+          _hover={{ shadow: 'md', bgColor: 'green.200' }}
         >
-          <Image src={item.images[0].url} width={150} height={200} alt={item.name} className="rounded-md" />
+          <Image src={item.images[0].url} priority width={250} height={250} alt={item.name} className="rounded-md" />
 
           <Link href="/playlists/123" passHref>
             <LinkOverlay
