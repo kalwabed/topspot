@@ -1,4 +1,4 @@
-import { Box, Container, Flex, Text, Button } from '@chakra-ui/react'
+import { Box, Container, Flex, Text, Button, Link as ChakraLink } from '@chakra-ui/react'
 import { signOut, useSession } from 'next-auth/react'
 import Link from 'next/link'
 import React from 'react'
@@ -10,8 +10,10 @@ const TopNavigation = () => {
   return (
     <Box w="full" bgColor="gray.200" shadow="sm" p={4}>
       <Container maxW="container.lg" mx="auto" p={0}>
-        <Flex justify="space-between">
-          <Text>Top Navigation</Text>
+        <Flex flexDir={['column', 'row']} gap={[2, 0]} justify="space-between" alignItems="center">
+          <Link href="/" passHref>
+            <ChakraLink fontWeight="black">TopSpot</ChakraLink>
+          </Link>
 
           {session?.user ? (
             <Flex alignItems="center">

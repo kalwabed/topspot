@@ -11,7 +11,7 @@ const TopMeta = ({ playlist }: { playlist: Playlist }) => {
       alignItems="center"
       w="full"
       shadow="md"
-      rounded="lg"
+      rounded={['none', 'lg']}
       bgGradient="linear(to-b, green.300, gray.700)"
       p={8}
       gap={4}
@@ -19,7 +19,7 @@ const TopMeta = ({ playlist }: { playlist: Playlist }) => {
       <Box minW="250px">
         <Image src={playlist.images[0].url} width={250} height={250} />
       </Box>
-      <Heading fontSize={['3xl', '5xl']} color="white">
+      <Heading textAlign={['center', 'start']} fontSize={['3xl', '5xl']} color="white">
         {playlist.name}
       </Heading>
     </Flex>

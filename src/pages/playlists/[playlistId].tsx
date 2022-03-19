@@ -7,16 +7,17 @@ import { getPlaylist } from '~lib/spotify'
 import WithAuthorizedUser from '~components/hoc/with-authentication'
 import TopMeta from '~components/playlist/top-meta'
 import TrackList from '~components/playlist/tracks'
+import PlaylistNavigation from '~components/playlist/navigation'
 
 const PlaylistsDetailPage = () => {
   const { query } = useRouter()
   const { data: playlist } = useSWR(`/playlists/${query.playlistId}`, () => getPlaylist(query.playlistId as string))
 
-  console.log(playlist)
   if (!playlist) return <Text>Loading...</Text>
 
   return (
-    <Flex flexDir="column" mt={4}>
+    <Flex flexDir="column" mt={[0, 4]}>
+      <PlaylistNavigation />
       <TopMeta playlist={playlist?.data} />
       <TrackList playlist={playlist?.data} />
     </Flex>

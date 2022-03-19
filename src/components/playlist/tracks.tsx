@@ -21,10 +21,12 @@ const TrackList = ({ playlist }: { playlist: Playlist }) => {
       {playlist?.tracks?.items?.map(item => (
         <Grid
           key={item.track.id}
-          gridTemplateColumns="2fr 1fr 1fr"
+          gridTemplateColumns={['none', '2fr 1fr 1fr']}
+          gridTemplateRows={['repeat(2,1fr)', 'none']}
           alignItems="center"
           w="full"
           rounded="sm"
+          p={[4, 0]}
           _hover={{ bgColor: 'gray.50' }}
         >
           <Flex alignItems="center">
