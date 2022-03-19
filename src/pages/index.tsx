@@ -10,7 +10,7 @@ import Playlists from '~components/profile/playlists'
 
 const HomePage: NextPage = () => {
   const { data: session } = useSession()
-  const { data: playlists } = useSWR('/me/playlists', getUserPlaylists)
+  const { data: playlists } = useSWR(`/me/playlists/${session.user.email}`, getUserPlaylists)
 
   return (
     <VStack align="start" w="full" spacing={8} mt={8}>
@@ -42,11 +42,7 @@ const HomePage: NextPage = () => {
           Playlists
         </Heading>
 
-        {playlists ? (
-          <Playlists playlists={playlists?.userPlaylists} />
-        ) : (
-          <Text textAlign="center">Belum ada playlists</Text>
-        )}
+        {playlists ? <Playlists playlists={playlists?.data} /> : <Text textAlign="center">Belum ada playlists</Text>}
       </Box>
 
       <style jsx global>{`

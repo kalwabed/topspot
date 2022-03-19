@@ -24,7 +24,7 @@ const Playlists = ({ playlists }: { playlists: UserPlaylists }) => {
         >
           <Image src={item.images[0].url} priority width={250} height={250} alt={item.name} className="rounded-md" />
 
-          <Link href="/playlists/123" passHref>
+          <Link href={`/playlists/${item.id}`} passHref>
             <LinkOverlay
               title={item.name}
               my={4}

@@ -1,9 +1,14 @@
 import { getSession } from 'next-auth/react'
-import { UserPlaylists } from '~types/playlists'
 
+import { Playlist, UserPlaylists } from '~types/playlists'
 import { User } from '~types/user'
 
 const BASE_API = 'https://api.spotify.com/v1'
+
+interface ApiResponse<T> {
+  status: number
+  data: T
+}
 
 const getAccessToken = async (): Promise<string> => {
   const session = await getSession({})
@@ -26,21 +31,31 @@ async function fetcher(url: string, options?: RequestInit): Promise<Response> {
   return response
 }
 
-export async function getCurrentUser(): Promise<{ user: User; status: number } | undefined> {
+export async function getCurrentUser(): Promise<ApiResponse<User> | undefined> {
   try {
     const fetchUser = await fetcher('/me')
 
-    return { user: await fetchUser.json(), status: fetchUser.status }
+    return { data: await fetchUser.json(), status: fetchUser.status }
   } catch (error) {
     console.error(error)
   }
 }
 
-export async function getUserPlaylists(): Promise<{ userPlaylists: UserPlaylists; status: number } | undefined> {
+export async function getUserPlaylists(): Promise<ApiResponse<UserPlaylists> | undefined> {
   try {
     const fetchUserPlaylists = await fetcher('/me/playlists')
 
-    return { userPlaylists: await fetchUserPlaylists.json(), status: fetchUserPlaylists.status }
+    return { data: await fetchUserPlaylists.json(), status: fetchUserPlaylists.status }
+  } catch (error) {
+    console.error(error)
+  }
+}
+
+export async function getPlaylist(playlistId: string): Promise<ApiResponse<Playlist> | undefined> {
+  try {
+    const fetchPlaylist = await fetcher(`/playlists/${playlistId}`)
+
+    return { data: await fetchPlaylist.json(), status: fetchPlaylist.status }
   } catch (error) {
     console.error(error)
   }
