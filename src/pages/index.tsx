@@ -67,7 +67,7 @@ const HomePage: NextPage = () => {
           Playlists
         </Heading>
 
-        {playlists ? <Playlists playlists={playlists?.data} /> : <Text textAlign="center">Belum ada playlists</Text>}
+        {playlists ? <Playlists playlists={playlists?.data} /> : <Text textAlign="center">No playlists yet</Text>}
       </Box>
     </VStack>
   )

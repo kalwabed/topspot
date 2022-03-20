@@ -7,7 +7,7 @@ const LoginForm = () => {
   return (
     <Flex flexDir="column" align="center" justify="center">
       <Heading fontSize="4xl" mb={8}>
-        Feel your Spotify alternative
+        Welcome to TopSpot!
       </Heading>
       <Box maxW="lg" w="full" rounded="lg" p={8}>
         <Button isFullWidth colorScheme="whatsapp" leftIcon={<BsSpotify />} onClick={() => signIn('spotify')}>
