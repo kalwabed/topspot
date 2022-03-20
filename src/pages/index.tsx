@@ -7,6 +7,7 @@ import useSWR from 'swr'
 import WithAuthorizedUser from '~components/hoc/with-authentication'
 import { getUserPlaylists } from '~lib/spotify'
 import Playlists from '~components/profile/playlists'
+import { useUserContext } from '~contexts/user-context'
 
 export const getServerSideProps: GetServerSideProps = async props => {
   const { req } = props
@@ -28,6 +29,7 @@ export const getServerSideProps: GetServerSideProps = async props => {
 const HomePage: NextPage = () => {
   const { data: session } = useSession()
   const { data: playlists } = useSWR(`/me/playlists/${session.user.email}`, getUserPlaylists)
+  const { user } = useUserContext()
 
   return (
     <VStack align="start" w="full" spacing={8} mt={8}>
@@ -46,12 +48,18 @@ const HomePage: NextPage = () => {
           src={session?.user?.image}
           alt="User profile"
           objectFit="cover"
-          width={70}
-          height={70}
+          width={120}
+          height={120}
           className="rounded-full"
         />
 
-        <Heading ml={[0, 8]}>{session?.user?.name}</Heading>
+        <Flex flexDir="column" align={['center', 'start']} ml={[0, 8]}>
+          <Heading as="h1" fontSize={['4xl', '6xl']}>
+            {session?.user?.name}
+          </Heading>
+
+          <Text>{user.followers.total} Followers</Text>
+        </Flex>
       </Flex>
 
       <Box w="full" p={8} bgColor="gray.50" rounded="lg" shadow="base" border="1px solid" borderColor="gray.200">

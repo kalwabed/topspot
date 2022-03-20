@@ -1,6 +1,7 @@
 import { signOut, useSession } from 'next-auth/react'
 import { useRouter } from 'next/router'
 import { useState, useEffect } from 'react'
+import { useUserContext } from '~contexts/user-context'
 
 import { getCurrentUser } from '~lib/spotify'
 
@@ -10,6 +11,7 @@ const WithAuthorizedUser = (Component: React.ElementType) => {
     const [isReady, setIsReady] = useState(false)
     const router = useRouter()
     const { data: userSession } = useSession()
+    const { setUser } = useUserContext()
 
     useEffect(() => {
       async function checkSession() {
@@ -17,10 +19,12 @@ const WithAuthorizedUser = (Component: React.ElementType) => {
 
         if (currentUser?.status === 401) {
           signOut({ redirect: false })
-          return {}
+          setUser(null)
+          return false
         }
 
-        return currentUser.data
+        setUser(currentUser.data)
+        return true
       }
 
       checkSession().then(session => {

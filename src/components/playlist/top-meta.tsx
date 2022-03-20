@@ -17,7 +17,13 @@ const TopMeta = ({ playlist }: { playlist: Playlist }) => {
       gap={4}
     >
       <Box minW="250px">
-        <Image src={playlist.images[0].url} alt={`${playlist.name} image`} width={250} height={250} />
+        <Image
+          src={playlist?.images[0]?.url || 'https://tkg.af/assets/themes/sharks-english/assets/img/placeholder.jpg'}
+          alt={`${playlist.name} image`}
+          width={250}
+          height={250}
+          className="rounded-md"
+        />
       </Box>
       <Heading textAlign={['center', 'start']} fontSize={['3xl', '5xl']} color="white">
         {playlist.name}

@@ -22,7 +22,14 @@ const Playlists = ({ playlists }: { playlists: UserPlaylists }) => {
           transition="all .2s ease-in-out"
           _hover={{ shadow: 'md', bgColor: 'green.200' }}
         >
-          <Image src={item.images[0].url} priority width={250} height={250} alt={item.name} className="rounded-md" />
+          <Image
+            src={item?.images[0]?.url || 'https://tkg.af/assets/themes/sharks-english/assets/img/placeholder.jpg'}
+            priority
+            width={250}
+            height={250}
+            alt={item.name}
+            className="rounded-md"
+          />
 
           <Link href={`/playlists/${item.id}`} passHref>
             <LinkOverlay

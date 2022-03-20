@@ -18,6 +18,9 @@ const TrackList = ({ playlist }: { playlist: Playlist }) => {
     <VStack mt={8} spacing={4} alignItems="start">
       <RemoveTrackModal isOpen={isOpen} onClose={onClose} playlistId={playlist.id} trackUri={trackUri} />
 
+      <Text textAlign="center" fontSize="lg" fontWeight="medium">
+        Let&apos;s find something for your playlist.
+      </Text>
       {playlist?.tracks?.items?.map(({ track }) => (
         <Grid
           key={track.id}
@@ -27,7 +30,7 @@ const TrackList = ({ playlist }: { playlist: Playlist }) => {
           w="full"
           rounded="sm"
           p={[4, 0]}
-          _hover={{ bgColor: 'gray.50' }}
+          _hover={{ bgColor: 'gray.100' }}
         >
           <Flex alignItems="center">
             <Image src={track.album.images[2].url} alt={`${track.album.name} album image`} width={50} height={50} />

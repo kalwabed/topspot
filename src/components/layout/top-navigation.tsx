@@ -49,11 +49,7 @@ const TopNavigation = () => {
               </MenuList>
             </Menu>
           ) : (
-            <Link href="/login" passHref>
-              <Button as="a" colorScheme="yellow" size="sm">
-                Login
-              </Button>
-            </Link>
+            <Text>Hi, there!</Text>
           )}
         </Flex>
       </Container>
