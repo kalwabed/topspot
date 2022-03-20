@@ -18,9 +18,9 @@ const TrackList = ({ playlist }: { playlist: Playlist }) => {
     <VStack mt={8} spacing={4} alignItems="start">
       <RemoveTrackModal isOpen={isOpen} onClose={onClose} playlistId={playlist.id} trackUri={trackUri} />
 
-      {playlist?.tracks?.items?.map(item => (
+      {playlist?.tracks?.items?.map(({ track }) => (
         <Grid
-          key={item.track.id}
+          key={track.id}
           gridTemplateColumns={['none', '2fr 1fr 1fr']}
           gridTemplateRows={['repeat(2,1fr)', 'none']}
           alignItems="center"
@@ -30,16 +30,16 @@ const TrackList = ({ playlist }: { playlist: Playlist }) => {
           _hover={{ bgColor: 'gray.50' }}
         >
           <Flex alignItems="center">
-            <Image src={item.track.album.images[2].url} width={50} height={50} />
+            <Image src={track.album.images[2].url} alt={`${track.album.name} album image`} width={50} height={50} />
             <Flex flexDir="column" ml={4}>
               <Text as="b" fontWeight="semibold">
-                {item.track.name}
+                {track.name}
               </Text>
-              <Text fontWeight="light">{item.track.artists[0].name}</Text>
+              <Text fontWeight="light">{track.artists[0].name}</Text>
             </Flex>
           </Flex>
-          <Text textOverflow="ellipsis" overflow="hidden" whiteSpace="nowrap" title={item.track.album.name}>
-            {item.track.album.name}
+          <Text textOverflow="ellipsis" overflow="hidden" whiteSpace="nowrap" title={track.album.name}>
+            {track.album.name}
           </Text>
           <Button
             ml="auto"
@@ -47,7 +47,7 @@ const TrackList = ({ playlist }: { playlist: Playlist }) => {
             colorScheme="red"
             variant="ghost"
             size="sm"
-            onClick={() => handleOpenModal(item.track.uri)}
+            onClick={() => handleOpenModal(track.uri)}
           >
             Remove
           </Button>
