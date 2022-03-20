@@ -11,7 +11,7 @@ export default function MyApp({ Component, pageProps: { session, ...pageProps } 
   return (
     <ChakraProvider theme={theme}>
       <Head>
-        <title>Spotify alternative</title>
+        <title>TopSpot</title>
       </Head>
       <SessionProvider session={session}>
         <LayoutRoot>

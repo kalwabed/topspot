@@ -1,8 +1,20 @@
-import { Box, Container, Flex, Text, Button, Link as ChakraLink } from '@chakra-ui/react'
+import {
+  Box,
+  Container,
+  Flex,
+  Text,
+  Button,
+  Link as ChakraLink,
+  Menu,
+  MenuButton,
+  MenuList,
+  MenuItem
+} from '@chakra-ui/react'
 import { signOut, useSession } from 'next-auth/react'
+import Image from 'next/image'
 import Link from 'next/link'
 import React from 'react'
-import { HiOutlineLogout } from 'react-icons/hi'
+import { HiChevronDown } from 'react-icons/hi'
 
 const TopNavigation = () => {
   const { data: session } = useSession()
@@ -12,24 +24,30 @@ const TopNavigation = () => {
       <Container maxW="container.lg" mx="auto" p={0}>
         <Flex flexDir={['column', 'row']} gap={[2, 0]} justify="space-between" alignItems="center">
           <Link href="/" passHref>
-            <ChakraLink fontWeight="black">TopSpot</ChakraLink>
+            <ChakraLink fontWeight="black" fontSize="xl">
+              TopSpot
+            </ChakraLink>
           </Link>
 
           {session?.user ? (
-            <Flex alignItems="center">
-              <Text>Hi, {session?.user?.name}</Text>
-              <Box as="span" mx={4}>
-                |
-              </Box>
-              <Button
-                size="sm"
-                variant="ghost"
-                onClick={() => signOut({ callbackUrl: '/login' })}
-                rightIcon={<HiOutlineLogout />}
-              >
-                Logout
-              </Button>
-            </Flex>
+            <Menu>
+              <MenuButton as={Button} rightIcon={<HiChevronDown />} variant="ghost">
+                <Flex alignItems="center">
+                  <Image
+                    src={session.user.image}
+                    alt={`${session.user.name} profile image`}
+                    width={32}
+                    height={32}
+                    objectFit="cover"
+                    className="rounded-full"
+                  />
+                  <Text ml={4}>{session?.user?.name}</Text>
+                </Flex>
+              </MenuButton>
+              <MenuList>
+                <MenuItem onClick={() => signOut({ callbackUrl: '/login' })}>Log out</MenuItem>
+              </MenuList>
+            </Menu>
           ) : (
             <Link href="/login" passHref>
               <Button as="a" colorScheme="yellow" size="sm">
@@ -39,6 +57,16 @@ const TopNavigation = () => {
           )}
         </Flex>
       </Container>
+
+      <style jsx global>{`
+        .rounded-full {
+          border-radius: 50%;
+        }
+
+        .rounded-md {
+          border-radius: 5px;
+        }
+      `}</style>
     </Box>
   )
 }

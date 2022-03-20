@@ -43,7 +43,7 @@ const HomePage: NextPage = () => {
         borderColor="gray.200"
       >
         <Image
-          src={session?.user?.image || ''}
+          src={session?.user?.image}
           alt="User profile"
           objectFit="cover"
           width={70}
@@ -51,7 +51,7 @@ const HomePage: NextPage = () => {
           className="rounded-full"
         />
 
-        <Heading ml={8}>{session?.user?.name}</Heading>
+        <Heading ml={[0, 8]}>{session?.user?.name}</Heading>
       </Flex>
 
       <Box w="full" p={8} bgColor="gray.50" rounded="lg" shadow="base" border="1px solid" borderColor="gray.200">
@@ -61,16 +61,6 @@ const HomePage: NextPage = () => {
 
         {playlists ? <Playlists playlists={playlists?.data} /> : <Text textAlign="center">Belum ada playlists</Text>}
       </Box>
-
-      <style jsx global>{`
-        .rounded-full {
-          border-radius: 50%;
-        }
-
-        .rounded-md {
-          border-radius: 5px;
-        }
-      `}</style>
     </VStack>
   )
 }
